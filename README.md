@@ -28,7 +28,7 @@ Konfigurace SDK pro produkční použití se provádí voláním metody `init` n
 	GovData.init({ stage: '<hodnota>', key: '<hodnota>' });
 
 ## Použití
-***
+
 Vyhledání právnické osoby v obchodním rejstříku:
 
 	GovData.findByICO('00006947',
