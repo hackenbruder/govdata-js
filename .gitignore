@@ -1,0 +1,9 @@
+.DS_Store
+node_modules
+.idea
+*.js
+!lib/*.js
+!test/*.js
+*.map
+*.html
+!test/index.html

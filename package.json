@@ -1,0 +1,27 @@
+{
+	"name": "govdata",
+	"version": "1.0.0",
+	"description": "GovData Javascript SDK",
+	"author": "Flex Hackenbruder <hackenbruder@govdata.cz>",
+	"scripts": {
+		"test": "mocha --timeout 5000",
+		"prepublish": "coffee --bare --compile --output lib src/*.coffee"
+	},
+	"main": "lib/govdata.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/hackenbruder/govdata-js.git"
+	},
+	"bugs": {
+		"url": "https://github.com/hackenbruder/govdata-js/issues"
+	},
+	"keywords": [
+		"govdata",
+		"ares",
+		"obchodní rejstřík"
+	],
+	"devDependencies": {
+		"mocha": "*"
+	},
+	"license": "MIT"
+}
