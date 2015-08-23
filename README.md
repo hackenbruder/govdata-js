@@ -1,6 +1,6 @@
 # GovData Javascript SDK
 
-Oficiální javascriptové SDK s podporou prohlížečů a Node.js.
+Oficiální javascriptové SDK podporující prohlížeče a Node.js.
 ***
 
 ## Instalace
