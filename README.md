@@ -1,10 +1,8 @@
 # GovData Javascript SDK
 
 Oficiální javascriptové SDK podporující prohlížeče a Node.js.
-***
 
 ## Instalace
-***
 ### Prohlížeče
 
 Nejsnadnější instalaci SDK do prohlížeče můžete provést vložením následujícího tagu do HTML kódu vaší stránky:
@@ -22,7 +20,7 @@ SDK nainstalujete standardním příkazem:
 Volání `require` vrací jediný objekt.
 
 ## Konfigurace
-***
+
 SDK je dodáváno předkonfigurované jako `demo` s příslušným klíčem a limity. Tuto konfiguraci je možné využít k otestování naší služby a při vývoji vaší aplikace.
 
 Konfigurace SDK pro produkční použití se provádí voláním metody `init` na objektu `GovData`:
@@ -43,9 +41,9 @@ Vyhledání právnické osoby v obchodním rejstříku:
 	);
 
 ## Dokumentace
-***
+
 Dokumentace objektů v SDK se připravuje. Dostupné objekty a jejich metody si můžete prohlédnout v souboru [govdata.coffee](src/govdata.coffee).
 
 ##Licence
-***
+
 [MIT](LICENSE.md)
