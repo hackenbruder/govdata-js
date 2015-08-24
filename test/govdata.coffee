@@ -1,5 +1,6 @@
 #server nodejs
 if typeof process == 'object'
+	require 'coffee-script/register'
 	govdata = require '../src/govdata'
 	dataset = require './dataset'
 else
