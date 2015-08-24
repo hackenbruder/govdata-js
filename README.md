@@ -2,6 +2,8 @@
 
 Oficiální javascriptové SDK podporující prohlížeče a Node.js.
 
+[![Build Status](https://travis-ci.org/hackenbruder/govdata-js.svg)](https://travis-ci.org/hackenbruder/govdata-js)
+
 ## Instalace
 ### Prohlížeče
 
