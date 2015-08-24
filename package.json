@@ -4,8 +4,8 @@
 	"description": "GovData Javascript SDK",
 	"author": "Flex Hackenbruder <hackenbruder@govdata.cz>",
 	"scripts": {
-		"test": "mocha --timeout 5000",
-		"prepublish": "coffee --bare --compile --output lib src/*.coffee"
+		"test": "./node_modules/mocha/bin/mocha --timeout 5000",
+		"prepublish": "./node_modules/coffee-script/bin/coffee --bare --compile --output lib src/*.coffee"
 	},
 	"main": "lib/govdata.js",
 	"repository": {
