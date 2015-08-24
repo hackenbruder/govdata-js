@@ -21,6 +21,7 @@
 		"obchodní rejstřík"
 	],
 	"devDependencies": {
+		"coffee-script": "*",
 		"mocha": "*"
 	},
 	"license": "MIT"
