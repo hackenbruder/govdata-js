@@ -1,4 +1,11 @@
 language: node_js
 node_js:
-  - "node"
-  - "iojs"
+- node
+- iojs
+deploy:
+  provider: npm
+  email: hackenbruder@govdata.cz
+  api_key:
+    secure: aR3Gk/gF6tEHbCGoMDqPvKs+qoi6KcC9rhWZe9xNkHhHe5evtToHIMEhxM/M9Ew/qwWlgptL5T8HheNiKHVeOLZ8RZ+RqstjShxXeWKF3fWJOEmvYkaHFFVJ9O4X3aArqdqONKvyx4JqNSldAjgvkaYlNtGUN2nyEGGOZRYpe3knHr95/KPp70mcDW6or0gQhYSCXqxWKKydnP+QfT3X84+KSAsAImSE67wJ61ATN0yegNGkntNFTENocHvS/MPwcVG4GteWnmkBXOqlxjb1bs9DxfisOrzwdYLBJ5Bp1pm0xf7v8KAj5QG4Dlm0jBIQzeRteczrwRMnLBuCrcLKZlFUWcTs9tjW03i98hCxmbPfzMbc0aQIaewiwPyMK+DHRsZSKHj8z9F2b/inL0HPt/qzyaTW1KOTCts9dfm0tHEsN1Q9wxvjUK8RoET2wju+co1fovkrEkhEj4dPr7Vaconyn0fpm2pZk5GSjbaWeBxcWcTBGoxjCbKs2HXpjRFAtxSkE3sEq3EMCuMTYLL/t43RKm45FJsRi8uVGRmeLfwhaAR8KBpVZ4/LQ+m+JQTRpdd2GWlDvf41Pxee9ldzE1FO6enFPxT2zorFIVjLomCWpJiIMES7jsGDIr4/QVa5dKG5ueUFb8HlDFu4OJd59pDTnXGuffLPqzzayX17yyc=
+  on:
+    tags: true
