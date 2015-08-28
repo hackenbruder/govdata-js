@@ -24,7 +24,7 @@
       describe('Not found', function() {
         it('Returns an error', function(done) {
           this.timeout(5000);
-          return govdata.findByICO('123', function(entity) {
+          return govdata.findEntityByNumber('123', function(entity) {
             return errorMessage('Found');
           }, function(error) {
             if (error.getCode() === 110) {
@@ -38,7 +38,7 @@
       return describe('Found', function() {
         it('Returns an entity', function(done) {
           this.timeout(5000);
-          return govdata.findByICO('00006947', function(entity) {
+          return govdata.findEntityByNumber('00006947', function(entity) {
             return done();
           }, function(error) {
             return errorHelper(error);
@@ -79,9 +79,9 @@
     describe('Mocked: Entity', function() {
       var entity;
       entity = govdata.createEntity(dataset.entityStandard());
-      it('Has ICO', function() {
+      it('Has number (ICO)', function() {
         var s;
-        s = entity.getICO();
+        s = entity.getNumber();
         return typeof s === 'string' && s.length > 0;
       });
       it('Has a name', function() {
@@ -106,9 +106,9 @@
         updatedAt = standard.getVAT().getUpdatedAt();
         return typeof updatedAt === 'object' && updatedAt.getTime() > 0;
       });
-      it('Has DIC', function() {
+      it('Has number (DIC)', function() {
         var s;
-        s = standard.getVAT().getDIC();
+        s = standard.getVAT().getNumber();
         return typeof s === 'string' && s.length > 0;
       });
       it('Has accounts', function() {

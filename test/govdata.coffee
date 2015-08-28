@@ -19,7 +19,7 @@ describe 'GovData Integration', ->
 			it 'Returns an error', (done) ->
 				@timeout 5000
 
-				govdata.findByICO('123',
+				govdata.findEntityByNumber('123',
 					(entity) -> errorMessage 'Found',
 					(error) ->
 						if error.getCode() is 110
@@ -33,7 +33,7 @@ describe 'GovData Integration', ->
 			it 'Returns an entity', (done) ->
 				@timeout 5000
 
-				govdata.findByICO('00006947',
+				govdata.findEntityByNumber('00006947',
 					(entity) -> done(),
 					(error) -> errorHelper error
 				)
@@ -62,8 +62,8 @@ describe 'GovData Unit', ->
 	describe 'Mocked: Entity', ->
 		entity = govdata.createEntity dataset.entityStandard()
 
-		it 'Has ICO', ->
-			s = entity.getICO()
+		it 'Has number (ICO)', ->
+			s = entity.getNumber()
 			typeof s is 'string' && s.length > 0
 
 		it 'Has a name', ->
@@ -84,8 +84,8 @@ describe 'GovData Unit', ->
 			updatedAt = standard.getVAT().getUpdatedAt()
 			typeof updatedAt is 'object' && updatedAt.getTime() > 0
 
-		it 'Has DIC', ->
-			s = standard.getVAT().getDIC()
+		it 'Has number (DIC)', ->
+			s = standard.getVAT().getNumber()
 			typeof s is 'string' && s.length > 0
 
 		it 'Has accounts', ->

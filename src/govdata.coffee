@@ -68,13 +68,13 @@ do ->
 			@accounts.push new Account account for account in @data.accounts
 
 		getUpdatedAt:		=> @updatedAt
-		getDIC:					=> 'CZ' + @data.dic
+		getNumber:			=> 'CZ' + @data.dic
 		getAccounts:		=> @accounts
 
 		hasAccounts:		=> @accounts.length > 0
 		isUnreliable:		=> @data.unreliable
 
-		toString:				=> @getDIC()
+		toString:				=> @getNumber()
 
 	class Entity
 		constructor: (data) ->
@@ -82,7 +82,7 @@ do ->
 			@foundedAt = Helpers.getDate data.founded_at
 			@vat = if @hasVAT() && @hasVATData() then new VAT data.vat else ''
 
-		getICO:					=> @data.ico
+		getNumber:			=> @data.number
 		getName:				=> @data.name
 		getFoundedAt:		=> @foundedAt
 		getVAT:					=>
@@ -177,8 +177,8 @@ do ->
 
 		getURL: (method) => ''.concat @url, @stage, '/', method
 
-		findByICO: (ico, resolve, reject) =>
-			@get 'ico/' + ico,
+		findEntityByNumber: (number, resolve, reject) =>
+			@get 'entity/' + number,
 				(data) => resolve @createEntity data,
 				reject
 

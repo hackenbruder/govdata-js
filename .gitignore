@@ -3,6 +3,7 @@ node_modules
 .idea
 *.js
 !lib/*.js
+lib/govdata-*.js
 !test/*.js
 *.map
 *.html
