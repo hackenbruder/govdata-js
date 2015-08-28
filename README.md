@@ -46,6 +46,6 @@ Vyhledání právnické osoby v obchodním rejstříku:
 
 Dokumentace objektů v SDK se připravuje. Dostupné objekty a jejich metody si můžete prohlédnout v souboru [govdata.coffee](src/govdata.coffee?ts=2).
 
-##Licence
+## Licence
 
 [MIT](LICENSE.md)
