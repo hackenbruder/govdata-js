@@ -33,7 +33,7 @@ Konfigurace SDK pro produkční použití se provádí voláním metody `init` n
 
 Vyhledání právnické osoby v obchodním rejstříku:
 
-	GovData.findByNumber('00006947',
+	GovData.findByEntityNumber('00006947',
 		function(entity) {
 			console.info(entity.getName());
 		},
