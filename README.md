@@ -9,7 +9,7 @@ Oficiální javascriptové SDK podporující prohlížeče a Node.js.
 
 Nejsnadnější instalaci SDK do prohlížeče můžete provést vložením následujícího tagu do HTML kódu vaší stránky:
 
-	<script src="https://s3-eu-west-1.amazonaws.com/cdn.govdata.cz/js/govdata-1.0.0.min.js"></script>
+	<script src="https://s3-eu-west-1.amazonaws.com/cdn.govdata.cz/js/govdata-1.0.1.min.js"></script>
 
 Knihovnu také můžete instalovat lokálně na váš server a načítat jako vlastní javascript. Podporujeme knihovnu `Require.js`. SDK po instalaci vytváří jediný globální objekt `GovData` nebo `window.GovData`.
 
@@ -33,7 +33,7 @@ Konfigurace SDK pro produkční použití se provádí voláním metody `init` n
 
 Vyhledání právnické osoby v obchodním rejstříku:
 
-	GovData.findByICO('00006947',
+	GovData.findByNumber('00006947',
 		function(entity) {
 			console.info(entity.getName());
 		},
