@@ -35,12 +35,14 @@ Vyhledání právnické osoby v obchodním rejstříku:
 
 	GovData.findEntityByNumber('00006947',
 		function(entity) {
-			console.info(entity.getName());
+			console.info('Název:', entity.getName());
 		},
 		function(error) {
 			console.error(error.toString());
 		}
 	);
+
+Podrobnější příklad můžete najít [zde](https://gist.github.com/hackenbruder/9313b37361efab6391d5).
 
 ## Dokumentace
 
