@@ -65,7 +65,7 @@ do ->
 			@updatedAt = Helpers.getDate data.updated_at
 
 			@accounts = []
-			@accounts.push new Account account for account in @data.accounts
+			@accounts.push new Account account for account in @data.accounts if Array.isArray @data.accounts
 
 		getUpdatedAt:		=> @updatedAt
 		getNumber:			=> 'CZ' + @data.dic
