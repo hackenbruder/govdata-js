@@ -7,7 +7,7 @@
 
     Dataset.entityStandard = function() {
       return {
-        "ico": "0123456789",
+        "number": "0123456789",
         "address": "",
         "name": "Testing name",
         "registers": {
@@ -39,7 +39,7 @@
 
     Dataset.entityNoAccounts = function() {
       return {
-        "ico": "0123456789",
+        "number": "0123456789",
         "address": "",
         "name": "Testing name",
         "registers": {
@@ -61,7 +61,7 @@
 
     Dataset.entityMissingVAT = function() {
       return {
-        "ico": "0123456789",
+        "number": "0123456789",
         "address": "",
         "name": "Testing name",
         "registers": {
@@ -77,7 +77,7 @@
 
     Dataset.entityNoVAT = function() {
       return {
-        "ico": "0123456789",
+        "number": "0123456789",
         "address": "",
         "name": "Testing name",
         "registers": {
