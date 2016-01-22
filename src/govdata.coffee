@@ -30,6 +30,12 @@ do ->
 		valueOf:				=> @getCode()
 		toString:				=> ''.concat @getCode(), ' - ', @getMessage()
 
+	class Address
+		constructor: (data) ->
+			@data = data
+
+
+
 	class Account
 		constructor: (data) ->
 			@data = data
