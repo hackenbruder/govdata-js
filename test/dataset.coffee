@@ -1,6 +1,6 @@
 class Dataset
 	@entityStandard: -> {
-		"ico" : "0123456789",
+		"number" : "0123456789",
 		"address" : "",
 		"name" : "Testing name",
 		"registers" : {
@@ -28,7 +28,7 @@ class Dataset
 	}
 
 	@entityNoAccounts: -> {
-		"ico" : "0123456789",
+		"number" : "0123456789",
 		"address" : "",
 		"name" : "Testing name",
 		"registers" : {
@@ -48,7 +48,7 @@ class Dataset
 	}
 
 	@entityMissingVAT: -> {
-		"ico" : "0123456789",
+		"number" : "0123456789",
 		"address" : "",
 		"name" : "Testing name",
 		"registers" : {
@@ -62,7 +62,7 @@ class Dataset
 	}
 
 	@entityNoVAT: -> {
-		"ico" : "0123456789",
+		"number" : "0123456789",
 		"address" : "",
 		"name" : "Testing name",
 		"registers" : {
@@ -73,6 +73,54 @@ class Dataset
 		},
 		"vat" : "",
 		"founded_at" : 1398211200000
+	}
+
+	@addressStandard: -> {
+		"geo": {
+			"coords": [
+				50.088182,
+				14.420210
+			],
+			"status": 210
+		},
+		"ruian": {
+			"data": {
+				"address_id": 123456,
+				"city": "Město",
+				"city_area1": "Obec",
+				"city_area2": "Obec",
+				"city_code": 123,
+				"district": "Obec",
+				"district_code": 123,
+				"number1": 123,
+				"number2": 456,
+				"number_type": "č.p.",
+				"postal_code": 12345,
+				"sjtsk_x": 123,
+				"sjtsk_y": 456,
+				"street": "Ulice",
+				"wgs84_lat": 50.088182,
+				"wgs84_lon": 14.420210,
+				"updated_at": 1386720000
+			},
+			"formatted": [
+				'Ulice 123/456A',
+				'Obec',
+				'12345 Město'
+			],
+			"status": 210
+		},
+		"status": 300
+	}
+
+	@addressIncomplete: -> {
+		"geo": {
+			"status": 200
+		},
+		"ruian": {
+			"status": 200
+		},
+		"status": 305
 	}
 
 if module? && module.exports?
