@@ -123,6 +123,17 @@ class Dataset
 		"status": 305
 	}
 
+	@addressBroken: -> {
+		"geo": {
+			"status": 200
+		},
+		"ruian": {
+			"data": ""
+			"status": 210
+		},
+		"status": 305
+	}
+
 if module? && module.exports?
 	module.exports = Dataset
 else if typeof define is 'function' && define.amd?

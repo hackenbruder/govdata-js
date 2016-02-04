@@ -32,8 +32,33 @@ do ->
 
 	class RUIAN
 		constructor: (data) ->
-			@data = data
-			@updatedAt = Helpers.getDate(@data.updated_at * 1000)
+			@data = data.data
+			@formatted = data.formatted
+			@updatedAt = Helpers.getDate(data.updated_at * 1000)
+
+		getUpdatedAt:		=> @updatedAt
+		getId:					=> if @hasId() then @data.address_id else throw Helpers.createError.dataUnavailable()
+		getNumber:			=>
+			if @data.number2_character?
+				value = [@data.number1, @data.number2].join('/') + @data.number2_character.toUpperCase()
+			else if @data.number2?
+				value = [@data.number1, @data.number2].join('/')
+			else if @data.number1?
+				value = @data.number1
+			else
+				throw Helpers.createError.dataUnavailable()
+
+			#prefix if
+			#number is evidence or
+			#there are no streets and city is a district
+			prefix = @data.number_type?.length > 4 || !@hasStreet() && @isCityDistrict()
+			if prefix then [@data.number_type, value].join(' ') else value
+
+		getCity:				=> if @hasCity() then @data.city else throw Helpers.createError.dataUnavailable()
+		getDistrict:		=> if @hasDistrict() then @data.district else throw Helpers.createError.dataUnavailable()
+		getStreet:			=> if @hasStreet() then @data.street else throw Helpers.createError.dataUnavailable()
+		getFormatted:		=> if @hasFormatted() then @formatted else throw Helpers.createError.dataUnavailable()
+		getPostalCode:	=> if @hasPostalCode() then @data.postal_code else throw Helpers.createError.dataUnavailable()
 
 		isPrague: 			=> @data.city_area2?
 		isCityDistrict:	=> @data.city == @data.district
@@ -41,30 +66,9 @@ do ->
 		hasCity:				=> @data.city?
 		hasDistrict:		=> @data.district?
 		hasStreet:			=> @data.street?
-		hasFormatted:		=> @data.formatted?.legth > 0
+		hasNumber:			=> @data.number1? || @data.number2? || @data.number2_character?
+		hasFormatted:		=> @formatted?.length > 0
 		hasPostalCode:	=> @data.postal_code?
-
-		getUpdatedAt:		=> @updatedAt
-		getId:					=> if @hasId() then @data.address_id else throw Helpers.createError.dataUnavailable()
-		getNumber:			=>
-			if @data.number2_character?
-				value = [@data.number1, @data.number2, @data.number2_character.toUpperCase()]
-			else if @data.number2?
-				value = [@data.number1, @data.number2]
-			else
-				value = [@data.number1]
-
-			#prefix if
-			# number is evidence or
-			# there are no streets and city is a district
-			prefix = @data.number_type?.length > 4 || !@hasStreet() && @isCityDistrict()
-			if prefix then [@data.number_type].concat(value) else value
-
-		getCity:				=> if @hasCity() then @data.city else throw Helpers.createError.dataUnavailable()
-		getDistrict:		=> if @hasDistrict() then @data.district else throw Helpers.createError.dataUnavailable()
-		getStreet:			=> if @hasStreet() then @data.street else throw Helpers.createError.dataUnavailable()
-		getFormatted:		=> if @hasFormatted() then @data.formatted else throw Helpers.createError.dataUnavailable()
-		getPostalCode:	=> if @hasPostalCode() then @data.postal_code else throw Helpers.createError.dataUnavailable()
 
 		toString:				=> @getFormatted().join '\n'
 

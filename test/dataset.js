@@ -136,6 +136,19 @@
       };
     };
 
+    Dataset.addressBroken = function() {
+      return {
+        "geo": {
+          "status": 200
+        },
+        "ruian": {
+          "data": "",
+          "status": 210
+        },
+        "status": 305
+      };
+    };
+
     return Dataset;
 
   })();

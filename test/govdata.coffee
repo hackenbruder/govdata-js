@@ -13,6 +13,16 @@ errorHelper = (error) ->
 errorMessage = (message) ->
 	throw new Error 'Error: ' + message
 
+catchError = (callback, errorCallback, done) ->
+	try
+		callback()
+	catch e
+		if e - errorCallback() == 0
+			done()
+		else
+			errorHelper e
+	return
+
 describe 'GovData Integration', ->
 	describe 'Queries: Generic', ->
 		describe 'Not found', ->
@@ -103,13 +113,9 @@ describe 'GovData Unit', ->
 			it 'Throws an error on missing information', (done) ->
 				entity = govdata.createEntity dataset.entityMissingVAT()
 				if entity.hasVAT()
-					try
-						entity.getVAT()
-					catch e
-						if e - govdata.createError.dataUnavailable() == 0
-							done()
-						else
-							errorHelper e
+					catchError entity.getVAT
+					, govdata.createError.dataUnavailable
+					, done
 				else
 					errorMessage 'Doesn\'t have VAT information available'
 				return
@@ -138,24 +144,14 @@ describe 'GovData Unit', ->
 			it 'Returns bank code presence', -> local.hasBankCode() && !intl.hasBankCode()
 
 			it 'Throws an error on missing prefix', (done) ->
-				try
-					intl.getPrefix()
-				catch e
-					if e - govdata.createError.dataUnavailable() == 0
-						done()
-					else
-						errorHelper e
-				return
+				catchError intl.getPrefix
+				, govdata.createError.dataUnavailable
+				, done
 
 			it 'Throws an error on missing bank code', (done) ->
-				try
-					intl.getBankCode()
-				catch e
-					if e - govdata.createError.dataUnavailable() == 0
-						done()
-					else
-						errorHelper e
-				return
+				catchError intl.getBankCode
+				, govdata.createError.dataUnavailable
+				, done
 
 			it 'Acts as a string', ->
 				l = local.toString()
@@ -193,4 +189,100 @@ describe 'GovData Unit', ->
 			it 'Returns geo array', ->
 				Array.isArray address1.getGeo() && address1.getGeo().length == 2
 
+			it 'Throws an error on missing formatted string', (done) ->
+				catchError address2.getFormatted
+				, govdata.createError.dataUnavailable
+				, done
+
+			it 'Throws an error on string conversion when missing data', (done) ->
+				catchError address2.toString
+				, govdata.createError.dataUnavailable
+				, done
+
+			it 'Throws an error on missing RUIAN data', (done) ->
+				catchError address2.getRUIAN
+				, govdata.createError.dataUnavailable
+				, done
+
+			it 'Throws an error on missing geo data', (done) ->
+				catchError address2.getGeo
+				, govdata.createError.dataUnavailable
+				, done
+
+		describe 'Mocked: RUIAN', ->
+			ruian1 = govdata.createAddress(dataset.addressStandard()).getRUIAN()
+			ruian2 = govdata.createAddress(dataset.addressBroken()).getRUIAN()
+
+			it 'Acts as a string', ->
+				typeof ruian1.toString() is 'string'
+
+			it 'Has a postal code', -> ruian1.hasPostalCode() && !ruian2.hasPostalCode()
+			it 'Has formatted output', -> ruian1.hasFormatted() && !ruian2.hasFormatted()
+			it 'Has a street', -> ruian1.hasStreet() && !ruian2.hasStreet()
+			it 'Has a number', -> ruian1.hasNumber() && !ruian2.hasNumber()
+			it 'Has a district', -> ruian1.hasDistrict() && !ruian2.hasDistrict()
+			it 'Has a city', -> ruian1.hasCity() && !ruian2.hasCity()
+			it 'Has an id', -> ruian1.hasId() && !ruian2.hasId()
+			it 'Returns if city is a district', -> ruian1.isCityDistrict()
+			it 'Returns if address is in Prague', -> ruian1.isPrague()
+
+			it 'Returns a postal code', ->
+				typeof ruian1.getPostalCode() is 'number'
+
+			it 'Returns formatted', ->
+				Array.isArray ruian1.getFormatted() && ruian1.getFormatted().length > 0
+
+			it 'Returns a street', ->
+				typeof ruian1.getStreet() is 'string'
+
+			it 'Returns a district', ->
+				typeof ruian1.getDistrict() is 'string'
+
+			it 'Returns a city', ->
+				typeof ruian1.getCity() is 'string'
+
+			it 'Returns a number', ->
+				typeof ruian1.getNumber() is 'string'
+
+			it 'Returns a id', ->
+				typeof ruian1.getId() is 'number'
+
+			it 'Has a valid updated date', ->
+				at = ruian1.getUpdatedAt()
+				typeof at is 'object' && at.getTime() > 0
+
+			it 'Throws an error on missing postal code', (done) ->
+				catchError ruian2.getPostalCode
+				, govdata.createError.dataUnavailable
+				, done
+
+			it 'Throws an error on missing formatted', (done) ->
+				catchError ruian2.getFormatted
+				, govdata.createError.dataUnavailable
+				, done
+
+			it 'Throws an error on missing street', (done) ->
+				catchError ruian2.getStreet
+				, govdata.createError.dataUnavailable
+				, done
+
+			it 'Throws an error on missing district', (done) ->
+				catchError ruian2.getDistrict
+				, govdata.createError.dataUnavailable
+				, done
+
+			it 'Throws an error on missing city', (done) ->
+				catchError ruian2.getCity
+				, govdata.createError.dataUnavailable
+				, done
+
+			it 'Throws an error on missing number', (done) ->
+				catchError ruian2.getNumber
+				, govdata.createError.dataUnavailable
+				, done
+
+			it 'Throws an error on missing id', (done) ->
+				catchError ruian2.getId
+				, govdata.createError.dataUnavailable
+				, done
 	return
