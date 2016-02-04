@@ -19,24 +19,25 @@ describe 'GovData Integration', ->
 			it 'Returns an error', (done) ->
 				@timeout 5000
 
-				govdata.findEntityByNumber('123',
-					(entity) -> errorMessage 'Found',
-					(error) ->
+				govdata.findEntityByNumber '123'
+					, (entity) ->
+						errorMessage 'Found'
+					, (error) ->
 						if error.getCode() is 110
 							done()
 						else
 							errorHelper error
-				)
 			return
 
 		describe 'Found', ->
 			it 'Returns an entity', (done) ->
 				@timeout 5000
 
-				govdata.findEntityByNumber('00006947',
-					(entity) -> done(),
-					(error) -> errorHelper error
-				)
+				govdata.findEntityByNumber '00006947'
+					, (entity) ->
+						done()
+					, (error) ->
+						errorHelper error
 			return
 	return
 
@@ -62,7 +63,7 @@ describe 'GovData Unit', ->
 	describe 'Mocked: Entity', ->
 		entity = govdata.createEntity dataset.entityStandard()
 
-		it 'Has number (ICO)', ->
+		it 'Has s number (ICO)', ->
 			s = entity.getNumber()
 			typeof s is 'string' && s.length > 0
 
@@ -84,7 +85,7 @@ describe 'GovData Unit', ->
 			updatedAt = standard.getVAT().getUpdatedAt()
 			typeof updatedAt is 'object' && updatedAt.getTime() > 0
 
-		it 'Has number (DIC)', ->
+		it 'Has a number (DIC)', ->
 			s = standard.getVAT().getNumber()
 			typeof s is 'string' && s.length > 0
 
@@ -160,4 +161,36 @@ describe 'GovData Unit', ->
 				l = local.toString()
 				i = intl.toString()
 				typeof l is 'string' && l.length > 0 && typeof i is 'string' && i.length > 0
+
+		describe 'Mocked: Address', ->
+			address1 = govdata.createAddress dataset.addressStandard()
+			address2 = govdata.createAddress dataset.addressIncomplete()
+
+			it 'Acts as a string', ->
+				typeof address1.toString() is 'string'
+
+			it 'Has a formatted string', ->
+				address1.hasFormatted()
+
+			it 'Has RUIAN data', ->
+				address1.hasRUIAN() && !address2.hasRUIAN()
+
+			it 'Has geo data', ->
+				address1.hasGeo() && !address2.hasGeo()
+
+			it 'Returns geo accuracy', ->
+				address1.isGeoAccurate() && !address2.isGeoAccurate()
+
+			it 'Returns data accuracy', ->
+				address1.isAccurate() && !address2.isAccurate()
+
+			it 'Returns formatted string', ->
+				typeof address1.toString() is 'string'
+
+			it 'Returns RUIAN object', ->
+				typeof address1.getRUIAN() is 'object'
+
+			it 'Returns geo array', ->
+				Array.isArray address1.getGeo() && address1.getGeo().length == 2
+
 	return

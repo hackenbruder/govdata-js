@@ -30,11 +30,75 @@ do ->
 		valueOf:				=> @getCode()
 		toString:				=> ''.concat @getCode(), ' - ', @getMessage()
 
+	class RUIAN
+		constructor: (data) ->
+			@data = data
+			@updatedAt = Helpers.getDate(@data.updated_at * 1000)
+
+		isPrague: 			=> @data.city_area2?
+		isCityDistrict:	=> @data.city == @data.district
+		hasId:					=> @data.address_id?
+		hasCity:				=> @data.city?
+		hasDistrict:		=> @data.district?
+		hasStreet:			=> @data.street?
+		hasFormatted:		=> @data.formatted?.legth > 0
+		hasPostalCode:	=> @data.postal_code?
+
+		getUpdatedAt:		=> @updatedAt
+		getId:					=> if @hasId() then @data.address_id else throw Helpers.createError.dataUnavailable()
+		getNumber:			=>
+			if @data.number2_character?
+				value = [@data.number1, @data.number2, @data.number2_character.toUpperCase()]
+			else if @data.number2?
+				value = [@data.number1, @data.number2]
+			else
+				value = [@data.number1]
+
+			#prefix if
+			# number is evidence or
+			# there are no streets and city is a district
+			prefix = @data.number_type?.length > 4 || !@hasStreet() && @isCityDistrict()
+			if prefix then [@data.number_type].concat(value) else value
+
+		getCity:				=> if @hasCity() then @data.city else throw Helpers.createError.dataUnavailable()
+		getDistrict:		=> if @hasDistrict() then @data.district else throw Helpers.createError.dataUnavailable()
+		getStreet:			=> if @hasStreet() then @data.street else throw Helpers.createError.dataUnavailable()
+		getFormatted:		=> if @hasFormatted() then @data.formatted else throw Helpers.createError.dataUnavailable()
+		getPostalCode:	=> if @hasPostalCode() then @data.postal_code else throw Helpers.createError.dataUnavailable()
+
+		toString:				=> @getFormatted().join '\n'
+
 	class Address
 		constructor: (data) ->
 			@data = data
 
+			if @hasRUIAN() && @data.ruian?
+				@ruian = new RUIAN(@data.ruian)
 
+		enumProcessing: {
+			OK:									300,
+			MISSING_DATA:				305,
+			RUIAN_PENDING:			310,
+			GEOCODING_PENDING:	315
+		}
+
+		enumStates: {
+			UNAVAILABLE:				200,
+			INACCURATE:					205,
+			ACCURATE:						210
+		}
+
+		getGeo:					=> if @hasGeo() then @data.geo?.coords else throw Helpers.createError.dataUnavailable()
+		getRUIAN:				=> if @hasRUIAN() then @ruian else throw Helpers.createError.dataUnavailable()
+		getFormatted:		=> if @hasFormatted() then @data.ruian?.formatted else throw Helpers.createError.dataUnavailable()
+
+		isAccurate:			=> @data.status == @enumProcessing.OK
+		isGeoAccurate:	=> @data.geo?.status == @enumStates.ACCURATE
+		hasGeo:					=> @data.geo?.status != @enumStates.UNAVAILABLE
+		hasRUIAN:				=> @data.ruian?.status == @enumStates.ACCURATE
+		hasFormatted:		=> @hasRUIAN()
+
+		toString:				=> @getFormatted().join ', '
 
 	class Account
 		constructor: (data) ->
@@ -86,11 +150,26 @@ do ->
 		constructor: (data) ->
 			@data = data
 			@foundedAt = Helpers.getDate data.founded_at
-			@vat = if @hasVAT() && @hasVATData() then new VAT data.vat else ''
+
+			if @hasAddressData()
+				@address = new Address(data.address)
+			else
+				@address = ''
+
+			if @hasVAT() && @hasVATData()
+				@vat = new VAT(data.vat)
+			else
+				@vat = ''
 
 		getNumber:			=> @data.number
 		getName:				=> @data.name
 		getFoundedAt:		=> @foundedAt
+		getAddress:			=>
+			if @hasAddressData()
+				return @address
+			else
+				throw Helpers.createError.dataUnavailable()
+
 		getVAT:					=>
 			if @hasVAT()
 				if @hasVATData()
@@ -100,7 +179,8 @@ do ->
 			else
 				throw Helpers.createError.invalidRequest()
 
-		hasVAT:					=> @data.registers?.vat? == true
+		hasAddressData:	=> @data.address != ''
+		hasVAT:					=> @data.registers?.vat == true
 		hasVATData:			=> @data.vat != ''
 
 		toString:				=> @getName()
@@ -190,6 +270,9 @@ do ->
 
 		createEntity: (data) ->
 			return new Entity data
+
+		createAddress: (data) ->
+			return new Address data
 
 		createError: Helpers.createError
 
