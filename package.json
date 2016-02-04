@@ -1,6 +1,6 @@
 {
 	"name": "govdata",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "GovData Javascript SDK",
 	"author": "Flex Hackenbruder <hackenbruder@govdata.cz>",
 	"scripts": {
