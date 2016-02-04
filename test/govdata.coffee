@@ -158,56 +158,56 @@ describe 'GovData Unit', ->
 				i = intl.toString()
 				typeof l is 'string' && l.length > 0 && typeof i is 'string' && i.length > 0
 
-		describe 'Mocked: Address', ->
-			address1 = govdata.createAddress dataset.addressStandard()
-			address2 = govdata.createAddress dataset.addressIncomplete()
+	describe 'Mocked: Address', ->
+		address1 = govdata.createAddress dataset.addressStandard()
+		address2 = govdata.createAddress dataset.addressIncomplete()
 
-			it 'Acts as a string', ->
-				typeof address1.toString() is 'string'
+		it 'Acts as a string', ->
+			typeof address1.toString() is 'string'
 
-			it 'Has a formatted string', ->
-				address1.hasFormatted()
+		it 'Has a formatted string', ->
+			address1.hasFormatted()
 
-			it 'Has RUIAN data', ->
-				address1.hasRUIAN() && !address2.hasRUIAN()
+		it 'Has RUIAN data', ->
+			address1.hasRUIAN() && !address2.hasRUIAN()
 
-			it 'Has geo data', ->
-				address1.hasGeo() && !address2.hasGeo()
+		it 'Has geo data', ->
+			address1.hasGeo() && !address2.hasGeo()
 
-			it 'Returns geo accuracy', ->
-				address1.isGeoAccurate() && !address2.isGeoAccurate()
+		it 'Returns geo accuracy', ->
+			address1.isGeoAccurate() && !address2.isGeoAccurate()
 
-			it 'Returns data accuracy', ->
-				address1.isAccurate() && !address2.isAccurate()
+		it 'Returns data accuracy', ->
+			address1.isAccurate() && !address2.isAccurate()
 
-			it 'Returns formatted string', ->
-				typeof address1.toString() is 'string'
+		it 'Returns formatted string', ->
+			typeof address1.toString() is 'string'
 
-			it 'Returns RUIAN object', ->
-				typeof address1.getRUIAN() is 'object'
+		it 'Returns RUIAN object', ->
+			typeof address1.getRUIAN() is 'object'
 
-			it 'Returns geo array', ->
-				Array.isArray address1.getGeo() && address1.getGeo().length == 2
+		it 'Returns geo array', ->
+			Array.isArray address1.getGeo() && address1.getGeo().length == 2
 
-			it 'Throws an error on missing formatted string', (done) ->
-				catchError address2.getFormatted
-				, govdata.createError.dataUnavailable
-				, done
+		it 'Throws an error on missing formatted string', (done) ->
+			catchError address2.getFormatted
+			, govdata.createError.dataUnavailable
+			, done
 
-			it 'Throws an error on string conversion when missing data', (done) ->
-				catchError address2.toString
-				, govdata.createError.dataUnavailable
-				, done
+		it 'Throws an error on string conversion when missing data', (done) ->
+			catchError address2.toString
+			, govdata.createError.dataUnavailable
+			, done
 
-			it 'Throws an error on missing RUIAN data', (done) ->
-				catchError address2.getRUIAN
-				, govdata.createError.dataUnavailable
-				, done
+		it 'Throws an error on missing RUIAN data', (done) ->
+			catchError address2.getRUIAN
+			, govdata.createError.dataUnavailable
+			, done
 
-			it 'Throws an error on missing geo data', (done) ->
-				catchError address2.getGeo
-				, govdata.createError.dataUnavailable
-				, done
+		it 'Throws an error on missing geo data', (done) ->
+			catchError address2.getGeo
+			, govdata.createError.dataUnavailable
+			, done
 
 		describe 'Mocked: RUIAN', ->
 			ruian1 = govdata.createAddress(dataset.addressStandard()).getRUIAN()

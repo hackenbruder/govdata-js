@@ -158,7 +158,7 @@
           return entity.hasVAT() && entity.getVAT().hasAccounts() === false;
         });
       });
-      describe('Mocked: Account', function() {
+      return describe('Mocked: Account', function() {
         var accounts, intl, local;
         standard = govdata.createEntity(dataset.entityStandard());
         accounts = standard.getVAT().getAccounts();
@@ -199,49 +199,49 @@
           return typeof l === 'string' && l.length > 0 && typeof i === 'string' && i.length > 0;
         });
       });
-      describe('Mocked: Address', function() {
-        var address1, address2;
-        address1 = govdata.createAddress(dataset.addressStandard());
-        address2 = govdata.createAddress(dataset.addressIncomplete());
-        it('Acts as a string', function() {
-          return typeof address1.toString() === 'string';
-        });
-        it('Has a formatted string', function() {
-          return address1.hasFormatted();
-        });
-        it('Has RUIAN data', function() {
-          return address1.hasRUIAN() && !address2.hasRUIAN();
-        });
-        it('Has geo data', function() {
-          return address1.hasGeo() && !address2.hasGeo();
-        });
-        it('Returns geo accuracy', function() {
-          return address1.isGeoAccurate() && !address2.isGeoAccurate();
-        });
-        it('Returns data accuracy', function() {
-          return address1.isAccurate() && !address2.isAccurate();
-        });
-        it('Returns formatted string', function() {
-          return typeof address1.toString() === 'string';
-        });
-        it('Returns RUIAN object', function() {
-          return typeof address1.getRUIAN() === 'object';
-        });
-        it('Returns geo array', function() {
-          return Array.isArray(address1.getGeo() && address1.getGeo().length === 2);
-        });
-        it('Throws an error on missing formatted string', function(done) {
-          return catchError(address2.getFormatted, govdata.createError.dataUnavailable, done);
-        });
-        it('Throws an error on string conversion when missing data', function(done) {
-          return catchError(address2.toString, govdata.createError.dataUnavailable, done);
-        });
-        it('Throws an error on missing RUIAN data', function(done) {
-          return catchError(address2.getRUIAN, govdata.createError.dataUnavailable, done);
-        });
-        return it('Throws an error on missing geo data', function(done) {
-          return catchError(address2.getGeo, govdata.createError.dataUnavailable, done);
-        });
+    });
+    describe('Mocked: Address', function() {
+      var address1, address2;
+      address1 = govdata.createAddress(dataset.addressStandard());
+      address2 = govdata.createAddress(dataset.addressIncomplete());
+      it('Acts as a string', function() {
+        return typeof address1.toString() === 'string';
+      });
+      it('Has a formatted string', function() {
+        return address1.hasFormatted();
+      });
+      it('Has RUIAN data', function() {
+        return address1.hasRUIAN() && !address2.hasRUIAN();
+      });
+      it('Has geo data', function() {
+        return address1.hasGeo() && !address2.hasGeo();
+      });
+      it('Returns geo accuracy', function() {
+        return address1.isGeoAccurate() && !address2.isGeoAccurate();
+      });
+      it('Returns data accuracy', function() {
+        return address1.isAccurate() && !address2.isAccurate();
+      });
+      it('Returns formatted string', function() {
+        return typeof address1.toString() === 'string';
+      });
+      it('Returns RUIAN object', function() {
+        return typeof address1.getRUIAN() === 'object';
+      });
+      it('Returns geo array', function() {
+        return Array.isArray(address1.getGeo() && address1.getGeo().length === 2);
+      });
+      it('Throws an error on missing formatted string', function(done) {
+        return catchError(address2.getFormatted, govdata.createError.dataUnavailable, done);
+      });
+      it('Throws an error on string conversion when missing data', function(done) {
+        return catchError(address2.toString, govdata.createError.dataUnavailable, done);
+      });
+      it('Throws an error on missing RUIAN data', function(done) {
+        return catchError(address2.getRUIAN, govdata.createError.dataUnavailable, done);
+      });
+      it('Throws an error on missing geo data', function(done) {
+        return catchError(address2.getGeo, govdata.createError.dataUnavailable, done);
       });
       return describe('Mocked: RUIAN', function() {
         var ruian1, ruian2;
