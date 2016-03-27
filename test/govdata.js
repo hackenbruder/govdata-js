@@ -60,6 +60,18 @@
         });
       });
     });
+    describe('Queries: Geo', function() {
+      return describe('Find by geo', function() {
+        it('Returns an array of entities', function(done) {
+          this.timeout(5000);
+          return govdata.findEntitiesByGeo(50.08915042002743, 14.407195183397297, 100, 1, function(results) {
+            return done();
+          }, function(error) {
+            return errorHelper(error);
+          });
+        });
+      });
+    });
   });
 
   describe('GovData Unit', function() {
@@ -323,6 +335,34 @@
         });
         return it('Throws an error on missing id', function(done) {
           return catchError(ruian2.getId, govdata.createError.dataUnavailable, done);
+        });
+      });
+    });
+    describe('Mocked: Search Results', function() {
+      var results;
+      results = govdata.createSearchResults(dataset.searchResults());
+      it('Returns page count', function() {
+        return results.getPages() > 0;
+      });
+      it('Returns result count', function() {
+        return results.getCount() > 0;
+      });
+      it('Returns results', function() {
+        return Array.isArray(results.getResults() && results.getResults().length > 0);
+      });
+      return describe('Mocked: Search Result', function() {
+        var result;
+        result = results.getResults()[0];
+        it('Returns a number', function() {
+          return typeof result.getNumber() === 'string';
+        });
+        it('Returns a name', function() {
+          return typeof result.getName() === 'string';
+        });
+        return it('Has a valid founded date', function() {
+          var at;
+          at = result.getFoundedAt();
+          return typeof at === 'object' && at.getTime() > 0;
         });
       });
     });

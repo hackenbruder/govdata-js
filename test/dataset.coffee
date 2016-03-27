@@ -134,6 +134,29 @@ class Dataset
 		"status": 305
 	}
 
+	@searchResults: -> {
+		"pages": 1,
+		"data": [
+			{
+				"number": "123",
+				"name": "Testing name",
+				"type": 101,
+				"status": 210,
+				"lat": 50.088182,
+				"lon": 14.420210,
+				"founded_at": 1398211200
+			}, {
+				"number": "456",
+				"name": "Testing name",
+				"type": 101,
+				"status": 210,
+				"lat": 50.088182,
+				"lon": 14.420210,
+				"founded_at": 1398211200
+			}
+		]
+	}
+
 if module? && module.exports?
 	module.exports = Dataset
 else if typeof define is 'function' && define.amd?

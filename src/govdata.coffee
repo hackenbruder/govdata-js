@@ -8,7 +8,10 @@ do ->
 	class Helpers
 		@getDate: (timestamp) ->
 			date = new Date
-			date.setTime timestamp
+			if timestamp > 1000000000000
+				date.setTime timestamp
+			else
+				date.setTime timestamp * 1000
 			date
 
 		@createError: {
@@ -34,7 +37,7 @@ do ->
 		constructor: (data) ->
 			@data = data.data
 			@formatted = data.formatted
-			@updatedAt = Helpers.getDate(data.updated_at * 1000)
+			@updatedAt = Helpers.getDate data.updated_at
 
 		getUpdatedAt:		=> @updatedAt
 		getId:					=> if @hasId() then @data.address_id else throw Helpers.createError.dataUnavailable()
@@ -189,6 +192,29 @@ do ->
 
 		toString:				=> @getName()
 
+	class SearchResult
+		constructor: (data) ->
+			@data = data
+			@foundedAt = Helpers.getDate data.founded_at
+
+		getNumber:			=> @data.number
+		getName:				=> @data.name
+		getFoundedAt:		=> @foundedAt
+
+	class SearchResults
+		constructor: (data) ->
+			@data = data
+
+			if !Array.isArray @data.data
+				@results = []
+			else
+				@results = @data.data.map (result) ->
+					new SearchResult result
+
+		getPages:				=> @data.pages
+		getCount:				=> @results.length
+		getResults:			=> @results
+
 	class GovData
 		constructor: ->
 			@setDefaults()
@@ -235,9 +261,9 @@ do ->
 				#client jquery
 				@get = (method, resolve, reject) =>
 					$.ajax {
-						url:			@getURL method
-						method:		'GET'
-						dataType:	'json',
+						url: @getURL method
+						method: 'GET'
+						dataType: 'json',
 						headers: {
 							'x-api-key': @key
 						}
@@ -266,11 +292,29 @@ do ->
 			}
 
 		getURL: (method) => ''.concat @url, @stage, '/', method
+		getParams: (params) ->
+			Object.keys(params).map (key) ->
+				encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+			.join '&'
 
 		findEntityByNumber: (number, resolve, reject) =>
 			@get 'entity/' + number,
 				(data) => resolve @createEntity data,
 				reject
+
+		findEntitiesByGeo: (latitude, longitude, radius, page, resolve, reject) =>
+			params = @getParams {
+				lat: latitude,
+				lon: longitude,
+				radius: radius,
+				page: page
+			}
+			@get 'search/geo?' + params,
+				(data) => resolve @createSearchResults data,
+				reject
+
+		createSearchResults: (data) ->
+			return new SearchResults data
 
 		createEntity: (data) ->
 			return new Entity data

@@ -49,6 +49,18 @@ describe 'GovData Integration', ->
 					, (error) ->
 						errorHelper error
 			return
+
+	describe 'Queries: Geo', ->
+		describe 'Find by geo', ->
+			it 'Returns an array of entities', (done) ->
+				@timeout 5000
+
+				govdata.findEntitiesByGeo 50.08915042002743, 14.407195183397297, 100, 1
+					, (results) ->
+						done()
+					, (error) ->
+						errorHelper error
+			return
 	return
 
 describe 'GovData Unit', ->
@@ -285,4 +297,30 @@ describe 'GovData Unit', ->
 				catchError ruian2.getId
 				, govdata.createError.dataUnavailable
 				, done
+
+	describe 'Mocked: Search Results', ->
+		results = govdata.createSearchResults dataset.searchResults()
+
+		it 'Returns page count', ->
+			results.getPages() > 0
+
+		it 'Returns result count', ->
+			results.getCount() > 0
+
+		it 'Returns results', ->
+			Array.isArray results.getResults() && results.getResults().length > 0
+
+		describe 'Mocked: Search Result', ->
+			result = results.getResults()[0]
+
+			it 'Returns a number', ->
+				typeof result.getNumber() is 'string'
+
+			it 'Returns a name', ->
+				typeof result.getName() is 'string'
+
+			it 'Has a valid founded date', ->
+				at = result.getFoundedAt()
+				typeof at is 'object' && at.getTime() > 0
+
 	return
