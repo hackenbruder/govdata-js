@@ -8,10 +8,7 @@ do ->
 	class Helpers
 		@getDate: (timestamp) ->
 			date = new Date
-			if timestamp > 1000000000000
-				date.setTime timestamp
-			else
-				date.setTime timestamp * 1000
+			date.setTime timestamp
 			date
 
 		@createError: {
@@ -37,7 +34,7 @@ do ->
 		constructor: (data) ->
 			@data = data.data
 			@formatted = data.formatted
-			@updatedAt = Helpers.getDate data.updated_at
+			@updatedAt = Helpers.getDate(data.updated_at * 1000)
 
 		getUpdatedAt:		=> @updatedAt
 		getId:					=> if @hasId() then @data.address_id else throw Helpers.createError.dataUnavailable()
@@ -195,7 +192,7 @@ do ->
 	class SearchResult
 		constructor: (data) ->
 			@data = data
-			@foundedAt = Helpers.getDate data.founded_at
+			@foundedAt = Helpers.getDate(data.founded_at * 1000)
 
 		getNumber:			=> @data.number
 		getName:				=> @data.name
