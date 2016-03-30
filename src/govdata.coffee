@@ -196,7 +196,10 @@ do ->
 
 		getNumber:			=> @data.number
 		getName:				=> @data.name
+		getGeo:					=> [@data.lat, @data.lon]
 		getFoundedAt:		=> @foundedAt
+
+		hasGeo:					=> @data.lat? && @data.lon?
 
 	class SearchResults
 		constructor: (data) ->

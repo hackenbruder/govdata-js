@@ -359,10 +359,18 @@
         it('Returns a name', function() {
           return typeof result.getName() === 'string';
         });
-        return it('Has a valid founded date', function() {
+        it('Has a valid founded date', function() {
           var at;
           at = result.getFoundedAt();
           return typeof at === 'object' && at.getTime() > 0;
+        });
+        it('Reports geo coord presence', function() {
+          return result.hasGeo();
+        });
+        return it('Has geo coordinates', function() {
+          var geo;
+          geo = result.getGeo();
+          return Array.isArray(geo && geo.length === 2);
         });
       });
     });

@@ -323,4 +323,11 @@ describe 'GovData Unit', ->
 				at = result.getFoundedAt()
 				typeof at is 'object' && at.getTime() > 0
 
+			it 'Reports geo coord presence', ->
+				result.hasGeo()
+
+			it 'Has geo coordinates', ->
+				geo = result.getGeo()
+				Array.isArray geo && geo.length == 2
+
 	return
