@@ -1,5 +1,7 @@
 # GovData Javascript SDK
 
+[See English version](README.en.md)
+
 Oficiální javascriptové SDK podporující prohlížeče a Node.js.
 
 [![Build Status](https://travis-ci.org/hackenbruder/govdata-js.svg)](https://travis-ci.org/hackenbruder/govdata-js)
