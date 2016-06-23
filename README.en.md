@@ -8,9 +8,7 @@ Official Javascript SDK with browser and Node.js support.
 
 ## GovData
 
-`GovData` provides select OpenData using an API and simplifies it's integration in applications with an SDK. OpenData, APIs and SDKs create an ecosystem and high quality apps can only exist in healthy ecosystem. Our SDKs are test-covered and services highly available.
-
-We provide data from small business, business and other registries including registry of VAT payers. Data are standardized and searchable.
+`GovData` provides select OpenData using an API and simplifies it's integration in applications with an SDK. We currently provide data from small business, business and other registries including registry of VAT payers. Data are standardized and searchable. Our SDKs are test-covered and services highly available. We believe OpenData, APIs and SDKs create an ecosystem and high quality apps can only exist in healthy ecosystem.
 
 Try our service and SDK for free.
 
@@ -76,7 +74,7 @@ Entity search using GPS coordinates and radius using `findEntitiesByGeo` method:
         }
     );
 
-## Dokumentace
+## Documentation
 
 Documenting SDK objects is in progress. Please explore available objects and their methods in [govdata.coffee](src/govdata.coffee?ts=2).
 
