@@ -1,4 +1,22 @@
 class Dataset
+	@statusStandard: -> {
+		"timestamp" : 1496030856,
+		"services" : {
+			"mailboxes" : {
+				"updated_at" : 1495965900,
+				"frequency" : 86400
+			},
+			"addresses" : {
+				"updated_at" : 1495610724,
+				"frequency" : 2678400
+			},
+			"entities" : {
+				"updated_at" : 1495965900,
+				"frequency" : 86400
+			}
+		}
+	}
+
 	@entityStandard: -> {
 		"number" : "0123456789",
 		"address" : "",

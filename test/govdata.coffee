@@ -82,10 +82,27 @@ describe 'GovData Unit', ->
 					return false
 			return true
 
+	describe 'Mocked: Status', ->
+		status = govdata.createStatus dataset.statusStandard()
+
+		it 'Returns all services', ->
+			a = status.getServices()
+			Array.isArray a && a.length > 0
+			
+		it 'Returns service status', ->
+			v = status.get 'entities'
+			typeof v is 'object' && v.updated_at? && v.frequency? && v.status?
+
+		it 'Throws an error on missing service', (done) ->
+			callback = -> status.get('missing')
+			catchError callback
+			, govdata.createError.dataUnavailable
+			, done
+
 	describe 'Mocked: Entity', ->
 		entity = govdata.createEntity dataset.entityStandard()
 
-		it 'Has s number (ICO)', ->
+		it 'Has a number (ICO)', ->
 			s = entity.getNumber()
 			typeof s is 'string' && s.length > 0
 

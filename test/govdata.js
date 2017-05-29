@@ -102,10 +102,31 @@
         return true;
       });
     });
+    describe('Mocked: Status', function() {
+      var status;
+      status = govdata.createStatus(dataset.statusStandard());
+      it('Returns all services', function() {
+        var a;
+        a = status.getServices();
+        return Array.isArray(a && a.length > 0);
+      });
+      it('Returns service status', function() {
+        var v;
+        v = status.get('entities');
+        return typeof v === 'object' && (v.updated_at != null) && (v.frequency != null) && (v.status != null);
+      });
+      return it('Throws an error on missing service', function(done) {
+        var callback;
+        callback = function() {
+          return status.get('missing');
+        };
+        return catchError(callback, govdata.createError.dataUnavailable, done);
+      });
+    });
     describe('Mocked: Entity', function() {
       var entity;
       entity = govdata.createEntity(dataset.entityStandard());
-      it('Has s number (ICO)', function() {
+      it('Has a number (ICO)', function() {
         var s;
         s = entity.getNumber();
         return typeof s === 'string' && s.length > 0;

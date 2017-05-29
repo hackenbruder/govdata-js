@@ -5,6 +5,26 @@
   Dataset = (function() {
     function Dataset() {}
 
+    Dataset.statusStandard = function() {
+      return {
+        "timestamp": 1496030856,
+        "services": {
+          "mailboxes": {
+            "updated_at": 1495965900,
+            "frequency": 86400
+          },
+          "addresses": {
+            "updated_at": 1495610724,
+            "frequency": 2678400
+          },
+          "entities": {
+            "updated_at": 1495965900,
+            "frequency": 86400
+          }
+        }
+      };
+    };
+
     Dataset.entityStandard = function() {
       return {
         "number": "0123456789",

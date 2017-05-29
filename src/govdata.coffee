@@ -30,6 +30,21 @@ do ->
 		valueOf:				=> @getCode()
 		toString:				=> ''.concat @getCode(), ' - ', @getMessage()
 
+	class Status
+		constructor: (data) ->
+			@timestamp = data.timestamp
+			@services = data.services
+
+			Object.keys(data.services).map (key) ->
+				service = data.services[key]
+				difference = data.timestamp - service.updated_at
+				service.status = difference < service.frequency
+
+		getServices: => Object.keys(@services)
+		get: (service) => if @hasService(service) then @services[service] else throw Helpers.createError.dataUnavailable()
+
+		hasService: (service) => @services? && @services.hasOwnProperty service
+
 	class RUIAN
 		constructor: (data) ->
 			@data = data.data
@@ -297,6 +312,11 @@ do ->
 				encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
 			.join '&'
 
+		getStatus: (resolve, reject) =>
+			@get 'status',
+				(data) => resolve @createStatus data,
+				reject
+
 		findEntityByNumber: (number, resolve, reject) =>
 			@get 'entity/' + number,
 				(data) => resolve @createEntity data,
@@ -312,6 +332,9 @@ do ->
 			@get 'search/geo?' + params,
 				(data) => resolve @createSearchResults data,
 				reject
+
+		createStatus: (data) ->
+			return new Status data
 
 		createSearchResults: (data) ->
 			return new SearchResults data
