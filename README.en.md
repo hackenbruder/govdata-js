@@ -18,7 +18,7 @@ Try our service and SDK for free.
 Easiest browser SDK integration can be done by inserting following HTML tags in your page code:
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-	<script src="https://s3-eu-west-1.amazonaws.com/cdn.govdata.cz/js/govdata-1.0.7.min.js"></script>
+	<script src="https://s3-eu-west-1.amazonaws.com/cdn.govdata.cz/js/govdata-1.0.8.min.js"></script>
 
 You can also install the library locally on your server and load it as your own Javascript. We support `Require.js` library. After installation, SDK creates a single object `GovData` or `window.GovData`.
 
